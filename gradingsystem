@@ -1,0 +1,102 @@
+; Simple Grading System
+section .data            ;initialized data or variables to the registers
+
+    str1 db 'Your Grade is 1.0', 0xa  ; store string True 0xa means that line break
+    len1 equ $ - str1    ; will get the length or the end of the string
+
+    str2 db 'Your Grade is 2.0', 0xa 
+    len2 equ $ - str2
+
+    str3 db 'Your Grade is 3.0', 0xa 
+    len3 equ $ - str3
+
+    str4 db 'Your Grade is 4.0', 0xa 
+    len4 equ $ - str4
+
+    str5 db 'Your Grade is 5.0', 0xa 
+    len5 equ $ - str5
+
+    msg	db	'Thank you for using the program!',0xa	;our dear string
+    len	equ	$ - msg			;length of our dear string
+    
+    mygrade dd 82
+    integer1 dd 90
+    integer2 dd 80
+    integer3 dd 60
+    integer4 dd 55
+    integer5 dd 54
+
+section .text
+    global _start
+    
+_start:
+    ;compare
+    mov eax, [mygrade] ;move the variable in the register
+    
+    cmp eax, [integer1] ;compare
+    jge grade1
+    
+    cmp eax, [integer2]
+    jge grade2
+    
+    cmp eax, [integer3]
+    jge grade3
+
+    cmp eax, [integer4]
+    jge grade4
+
+    cmp eax, [integer5]
+    jge grade5
+
+grade1:
+
+    mov edx, len1 ; lengt of the string to print
+    mov ecx, str1 ;first element of the string
+    mov ebx, 1  ;display or write
+    mov eax, 4  ;output to the screen
+    int 0x80
+    jmp endif
+
+grade2:
+
+    mov edx, len2 ; lengt of the string to print
+    mov ecx, str2 ;first element of the string
+    mov ebx, 1  ;display or write
+    mov eax, 4  ;output to the screen
+    int 0x80
+    jmp endif
+
+grade3:
+    mov edx, len3 ; lengt of the string to print
+    mov ecx, str3 ;first element of the string
+    mov ebx, 1  ;display or write
+    mov eax, 4  ;output to the screen
+    int 0x80
+    jmp endif
+
+grade4:
+    mov edx, len4 ; lengt of the string to print
+    mov ecx, str4 ;first element of the string
+    mov ebx, 1  ;display or write
+    mov eax, 4  ;output to the screen
+    int 0x80
+    jmp endif
+
+grade5:
+    mov edx, len5 ; lengt of the string to print
+    mov ecx, str5 ;first element of the string
+    mov ebx, 1  ;display or write
+    mov eax, 4  ;output to the screen
+    int 0x80
+    jmp endif
+
+endif:
+    mov	edx, len    ;message length
+	mov	ecx, msg    ;message to write
+	mov	ebx, 1	    ;file descriptor (stdout)
+	mov	eax, 4	    ;system call number (sys_write)
+	int	0x80        ;call kernel
+
+exit:
+    mov eax,1
+    int 0x80
